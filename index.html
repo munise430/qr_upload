@@ -20,7 +20,7 @@ function upload() {
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "qr_upload");
+  formData.append("upload_preset", "melosxyz");
 
   fetch("https://api.cloudinary.com/v1_1/dea35ka7n/image/upload", {
     method: "POST",
