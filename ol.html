@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fotoğraf Yükle</title>
+</head>
+<body>
+
+<h2>Fotoğraf Yükle</h2>
+
+<input type="file" id="fileInput" accept="image/*">
+<button onclick="upload()">Yükle</button>
+
+<p id="msg"></p>
+
+<script>
+function upload() {
+  const file = document.getElementById("fileInput").files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "melosxyz"); // preset adı
+
+  fetch("https://api.cloudinary.com/v1_1/dea35ka7n/image/upload", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data); // Tarayıcı konsolunda URL’yi görebilirsin
+    // Fotoğrafın URL’sini kullanıcıya göster
+    document.getElementById("msg").innerHTML = 
+      `Fotoğraf yüklendi 👍<br>
+       <a href="${data.secure_url}" target="_blank">Fotoğrafı Görüntüle</a>`;
+  })
+  .catch(() => {
+    document.getElementById("msg").innerText = "Hata oluştu ❌";
+  });
+}
+</script>
+
+</body>
+</html>
